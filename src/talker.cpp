@@ -41,6 +41,7 @@ public:
         rclcpp::QoS qos = rclcpp::QoS(rclcpp::KeepLast(1000)).reliable();
         pub_ = this->create_publisher<std_msgs::msg::Int32>("chatter", qos);
 
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         RCLCPP_INFO(this->get_logger(), "Sending messages...");
         timer_ = this->create_wall_timer(1us, publish_message);
     }
