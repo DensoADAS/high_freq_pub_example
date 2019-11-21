@@ -34,7 +34,8 @@ public:
                 if (count_ > 100000)
                 {
                     timer_->cancel();
-                    RCLCPP_INFO(this->get_logger(), "Sent 100000 messages");
+                    auto end_time = this->now();
+                    RCLCPP_INFO(this->get_logger(), "Sent 100000 messages in %zu ns" , (end_time - this->start_time_).nanoseconds());
                 }
             };
 
@@ -42,6 +43,7 @@ public:
         pub_ = this->create_publisher<std_msgs::msg::Int32>("chatter", qos);
 
         std::this_thread::sleep_for(std::chrono::seconds(1));
+        start_time_ = this->now();
         RCLCPP_INFO(this->get_logger(), "Sending messages...");
         timer_ = this->create_wall_timer(1us, publish_message);
     }
@@ -50,6 +52,7 @@ private:
     int32_t count_ = 1;
     rclcpp::Publisher<std_msgs::msg::Int32>::SharedPtr pub_;
     rclcpp::TimerBase::SharedPtr timer_;
+    rclcpp::Time start_time_;
 };
 
 }  // namespace demo_nodes_cpp
