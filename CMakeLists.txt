@@ -18,27 +18,27 @@ find_package(std_msgs REQUIRED)
 
 include_directories(include)
 
-add_library(topics_library SHARED
+add_library(topics_library_high_freq SHARED
   src/talker.cpp
   src/listener.cpp)
 
-target_compile_definitions(topics_library
-  PRIVATE "DEMO_NODES_CPP_BUILDING_DLL")
-ament_target_dependencies(topics_library
+target_compile_definitions(topics_library_high_freq
+  PRIVATE "HIGH_FREQ_PUB_BUILDING_DLL")
+ament_target_dependencies(topics_library_high_freq
   "rclcpp"
   "rclcpp_components"
   "std_msgs")
 
-rclcpp_components_register_node(topics_library
-  PLUGIN "demo_nodes_cpp::Talker"
+rclcpp_components_register_node(topics_library_high_freq
+  PLUGIN "high_freq_pub::Talker"
   EXECUTABLE talker)
 
-rclcpp_components_register_node(topics_library
-  PLUGIN "demo_nodes_cpp::Listener"
+rclcpp_components_register_node(topics_library_high_freq
+  PLUGIN "high_freq_pub::Listener"
   EXECUTABLE listener)
 
 install(TARGETS
-  topics_library
+  topics_library_high_freq
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)

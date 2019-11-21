@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef DEMO_NODES_CPP__VISIBILITY_CONTROL_H_
-#define DEMO_NODES_CPP__VISIBILITY_CONTROL_H_
+#ifndef HIGH_FREQ_PUB__VISIBILITY_CONTROL_H_
+#define HIGH_FREQ_PUB__VISIBILITY_CONTROL_H_
 
 #ifdef __cplusplus
 extern "C"
@@ -25,34 +25,34 @@ extern "C"
 
 #if defined _WIN32 || defined __CYGWIN__
   #ifdef __GNUC__
-    #define DEMO_NODES_CPP_EXPORT __attribute__ ((dllexport))
-    #define DEMO_NODES_CPP_IMPORT __attribute__ ((dllimport))
+    #define HIGH_FREQ_PUB_EXPORT __attribute__ ((dllexport))
+    #define HIGH_FREQ_PUB_IMPORT __attribute__ ((dllimport))
   #else
-    #define DEMO_NODES_CPP_EXPORT __declspec(dllexport)
-    #define DEMO_NODES_CPP_IMPORT __declspec(dllimport)
+    #define HIGH_FREQ_PUB_EXPORT __declspec(dllexport)
+    #define HIGH_FREQ_PUB_IMPORT __declspec(dllimport)
   #endif
-  #ifdef DEMO_NODES_CPP_BUILDING_DLL
-    #define DEMO_NODES_CPP_PUBLIC DEMO_NODES_CPP_EXPORT
+  #ifdef HIGH_FREQ_PUB_BUILDING_DLL
+    #define HIGH_FREQ_PUB_PUBLIC HIGH_FREQ_PUB_EXPORT
   #else
-    #define DEMO_NODES_CPP_PUBLIC DEMO_NODES_CPP_IMPORT
+    #define HIGH_FREQ_PUB_PUBLIC HIGH_FREQ_PUB_IMPORT
   #endif
-  #define DEMO_NODES_CPP_PUBLIC_TYPE DEMO_NODES_CPP_PUBLIC
-  #define DEMO_NODES_CPP_LOCAL
+  #define HIGH_FREQ_PUB_PUBLIC_TYPE HIGH_FREQ_PUB_PUBLIC
+  #define HIGH_FREQ_PUB_LOCAL
 #else
-  #define DEMO_NODES_CPP_EXPORT __attribute__ ((visibility("default")))
-  #define DEMO_NODES_CPP_IMPORT
+  #define HIGH_FREQ_PUB_EXPORT __attribute__ ((visibility("default")))
+  #define HIGH_FREQ_PUB_IMPORT
   #if __GNUC__ >= 4
-    #define DEMO_NODES_CPP_PUBLIC __attribute__ ((visibility("default")))
-    #define DEMO_NODES_CPP_LOCAL  __attribute__ ((visibility("hidden")))
+    #define HIGH_FREQ_PUB_PUBLIC __attribute__ ((visibility("default")))
+    #define HIGH_FREQ_PUB_LOCAL  __attribute__ ((visibility("hidden")))
   #else
-    #define DEMO_NODES_CPP_PUBLIC
-    #define DEMO_NODES_CPP_LOCAL
+    #define HIGH_FREQ_PUB_PUBLIC
+    #define HIGH_FREQ_PUB_LOCAL
   #endif
-  #define DEMO_NODES_CPP_PUBLIC_TYPE
+  #define HIGH_FREQ_PUB_PUBLIC_TYPE
 #endif
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif  // DEMO_NODES_CPP__VISIBILITY_CONTROL_H_
+#endif  // HIGH_FREQ_PUB__VISIBILITY_CONTROL_H_

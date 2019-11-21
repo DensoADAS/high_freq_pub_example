@@ -12,15 +12,15 @@
 
 using namespace std::chrono_literals;
 
-namespace demo_nodes_cpp
+namespace high_freq_pub
 {
 
 class Talker : public rclcpp::Node
 {
 public:
-    DEMO_NODES_CPP_PUBLIC
+    HIGH_FREQ_PUB_PUBLIC
     explicit Talker(const rclcpp::NodeOptions& options)
-        : Node("talker", options)
+        : Node("talker_high_freq", options)
     {
         setvbuf(stdout, NULL, _IONBF, BUFSIZ);
         auto publish_message =
@@ -52,6 +52,6 @@ private:
     rclcpp::TimerBase::SharedPtr timer_;
 };
 
-}  // namespace demo_nodes_cpp
+}  // namespace high_freq_pub
 
-RCLCPP_COMPONENTS_REGISTER_NODE(demo_nodes_cpp::Talker)
+RCLCPP_COMPONENTS_REGISTER_NODE(high_freq_pub::Talker)

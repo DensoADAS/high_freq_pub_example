@@ -10,15 +10,15 @@
 
 using namespace std::chrono_literals;
 
-namespace demo_nodes_cpp
+namespace high_freq_pub
 {
 
 class Listener : public rclcpp::Node
 {
 public:
-    DEMO_NODES_CPP_PUBLIC
+    HIGH_FREQ_PUB_PUBLIC
     explicit Listener(const rclcpp::NodeOptions& options)
-        : Node("listener", options),
+        : Node("listener_high_freq", options),
           m_messageID(0),
           m_numReceivedMsgs(0)
     {
@@ -56,6 +56,6 @@ private:
     int32_t m_numReceivedMsgs;
 };
 
-}  // namespace demo_nodes_cpp
+}  // namespace high_freq_pub
 
-RCLCPP_COMPONENTS_REGISTER_NODE(demo_nodes_cpp::Listener)
+RCLCPP_COMPONENTS_REGISTER_NODE(high_freq_pub::Listener)
