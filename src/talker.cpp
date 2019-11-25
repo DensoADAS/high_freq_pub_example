@@ -26,10 +26,24 @@ public:
         auto publish_message =
             [this]() -> void
             {
-                auto msg = std::make_unique<std_msgs::msg::Int32>();
-                msg->data = count_++;
-                //RCLCPP_INFO(this->get_logger(), "Publishing message #%d", msg->data);
-                pub_->publish(std::move(msg));
+                auto data = count_++;
+                //RCLCPP_INFO(this->get_logger(), "Publishing message #%d", data);
+                bool pubFail = true;
+                while (pubFail)
+                {
+                    try
+                    {
+                        auto msg = std::make_unique<std_msgs::msg::Int32>();
+                        msg->data = data;
+                        pub_->publish(std::move(msg));
+                        pubFail = false;
+                    }
+                    catch(const rclcpp::exceptions::RCLError& err)
+                    {
+                        RCLCPP_INFO(this->get_logger(), "Failed to publish msg #%d", data);
+                        std::this_thread::sleep_for(10us);
+                    }
+                }
 
                 if (count_ > 100000)
                 {
@@ -39,7 +53,7 @@ public:
                 }
             };
 
-        rclcpp::QoS qos = rclcpp::QoS(rclcpp::KeepLast(1000)).reliable();
+        rclcpp::QoS qos = rclcpp::QoS(rclcpp::KeepAll()).reliable();
         pub_ = this->create_publisher<std_msgs::msg::Int32>("chatter", qos);
 
         std::this_thread::sleep_for(std::chrono::seconds(1));

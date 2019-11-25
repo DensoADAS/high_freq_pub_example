@@ -20,7 +20,8 @@ public:
     explicit Listener(const rclcpp::NodeOptions& options)
         : Node("listener_high_freq", options),
           m_messageID(0),
-          m_numReceivedMsgs(0)
+          m_numReceivedMsgs(0),
+          m_numLostMsgs(0)
     {
         setvbuf(stdout, NULL, _IONBF, BUFSIZ);
         auto callback =
@@ -32,14 +33,20 @@ public:
                 if (msgDiff >= 2)
                 {
                     //RCLCPP_ERROR(this->get_logger(), "Lost %d msgs, curr: %d", msgDiff - 1, msg->data);
+                    m_numLostMsgs += msgDiff - 1;
                 }
                 else
                 {
                     //RCLCPP_INFO(this->get_logger(), "Received msg %d", msg->data);
                 }
+
+                if (m_numReceivedMsgs + m_numLostMsgs == 100000)
+                {
+                    RCLCPP_INFO(this->get_logger(), "Received 100000 messages");
+                }
             };
 
-        rclcpp::QoS qos = rclcpp::QoS(rclcpp::KeepLast(1000)).reliable();
+        rclcpp::QoS qos = rclcpp::QoS(rclcpp::KeepAll()).reliable();
         sub_ = create_subscription<std_msgs::msg::Int32>("chatter", qos, callback);
         RCLCPP_INFO(this->get_logger(), "Ready to receive messages");
     }
@@ -47,13 +54,14 @@ public:
     ~Listener()
     {
         RCLCPP_INFO(this->get_logger(), "Received %d messages", m_numReceivedMsgs);
-        RCLCPP_INFO(this->get_logger(), "Lost %d messages", 100000 - m_numReceivedMsgs);
+        RCLCPP_INFO(this->get_logger(), "Lost %d messages", m_numLostMsgs);
     }
 
 private:
     rclcpp::Subscription<std_msgs::msg::Int32>::SharedPtr sub_;
     int32_t m_messageID;
     int32_t m_numReceivedMsgs;
+    int32_t m_numLostMsgs;
 };
 
 }  // namespace high_freq_pub
