@@ -39,7 +39,7 @@ public:
                 }
             };
 
-        rclcpp::QoS qos = rclcpp::QoS(rclcpp::KeepLast(1000)).reliable();
+        rclcpp::QoS qos = rclcpp::QoS(rclcpp::KeepAll()).reliable();
         sub_ = create_subscription<std_msgs::msg::Int32>("chatter", qos, callback);
         RCLCPP_INFO(this->get_logger(), "Ready to receive messages");
     }

@@ -39,7 +39,7 @@ public:
                 }
             };
 
-        rclcpp::QoS qos = rclcpp::QoS(rclcpp::KeepLast(1000)).reliable();
+        rclcpp::QoS qos = rclcpp::QoS(rclcpp::KeepAll()).reliable();
         pub_ = this->create_publisher<std_msgs::msg::Int32>("chatter", qos);
 
         std::this_thread::sleep_for(std::chrono::seconds(1));
